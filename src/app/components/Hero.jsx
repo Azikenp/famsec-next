@@ -103,7 +103,7 @@ const Hero = () => {
             <div className="flex space-x-2">
               <div className="w-4/12">
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="bg-greenLight rouded-2xl rounded-bl-[200px]"></div>
+                  <div className="bg-greenLight rounded-2xl rounded-bl-[200px]"></div>
                   {heroContent.images.img4 && (
                     <Image
                       src={heroContent.images.img4}
