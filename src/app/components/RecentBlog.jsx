@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -103,6 +103,20 @@ const RecentBlog = () => {
   const [isBeginning, setIsBeginning] = useState(null);
   const sliderRef = useRef(null);
 
+  useState(() => {
+    setIsEnd(sliderRef.current.swiper.isEnd);
+    setIsBeginning(sliderRef.current.swiper.isBeginning);
+  })
+
+  const preventHandler = useCallback(() => {
+    if(!sliderRef.current) return;
+    sliderRef.current.swiper.slidePrev();
+  })
+  const nextHandler = useCallback(() => {
+    if(!sliderRef.current) return;
+    sliderRef.current.swiper.slideNext();
+  })
+
   return (
     <section className="py-20 bg-light overflow-x-hidden">
       <div className="container px-4 mx-auto">
@@ -115,11 +129,42 @@ const RecentBlog = () => {
             )}
 
             {blogContent.heading.headingTitle && (
-              <h2 className="text-heading text-2xl lg:text-4xl font-bold mb-5">{blogContent.heading.headingTitle}</h2>
+              <h2 className="text-heading text-2xl lg:text-4xl font-bold mb-5">
+                {blogContent.heading.headingTitle}
+              </h2>
+            )}
+
+            {blogContent.heading.description && (
+              <h2 className="text-body leading-relaxed">
+                {blogContent.heading.description}
+              </h2>
             )}
           </div>
 
-          <div className="lg:w-5/12 text-left lg:text-right"></div>
+          <div className="lg:w-5/12 text-left lg:text-right">
+            <div classNAme="inline-flex ml-auto space-x-3">
+              <div onClick={preventHandler} className={`${isBeginning === true ? "opacity-30 bg-[#E1E7EA] cursor-auto" :  "opacity-100 hoveer:bg=primary"} group transition-all duration-300 ease-in-out w-12 h-12 cursor-pointer bg-[#E1E7EA] rounded-full inline-flex justify-center items-center`}>
+                <BiChevronLeft
+                  className={`text-3xl text-primary transition-all duration-300 ease-in-out group-hover:text-white 
+              ${
+                isBeginning === true
+                  ? "group-hover:text-primary"
+                  : "group-hover:text-white"
+              }`}
+                />
+              </div>
+              <div onClick={nextHandler} className={`${isBeginning === true ? "opacity-30 bg-[#E1E7EA] cursor-auto" :  "opacity-100 hoveer:bg=primary"} group transition-all duration-300 ease-in-out w-12 h-12 cursor-pointer bg-[#E1E7EA] rounded-full inline-flex justify-center items-center`}>
+                <BiChevronRight
+                  className={`text-3xl text-primary transition-all duration-300 ease-in-out group-hover:text-white 
+              ${
+                isBeginning === true
+                  ? "group-hover:text-primary"
+                  : "group-hover:text-white"
+              }`}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
