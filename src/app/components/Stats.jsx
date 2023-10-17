@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { BiChevronRight } from "react-icons/bi";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const statsContent = {
   stats: [
@@ -30,6 +34,14 @@ const statsContent = {
 };
 
 const Stats = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 700,
+      easeing: "slide",
+      once: true,
+    });
+  }, []);
+
   return (
     <section className="pt-20 pb-10">
       <div className="container px-4 mx-auto">
@@ -37,7 +49,12 @@ const Stats = () => {
           <div className="w-full lg:w-7/12 mb-20 lg:mb-0">
             <div className="grid grid-cols-3">
               {statsContent.stats.map((stat, idx) => (
-                <div className="text-center lg:text-left" key={stat.label}>
+                <div
+                  className="text-center lg:text-left"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                  key={stat.label}
+                >
                   <strong className="text-primary text-4xl xl:text-[52px] font-bold block leading-tight">
                     {stat.number}
                   </strong>
@@ -48,7 +65,7 @@ const Stats = () => {
           </div>
 
           <div className="w-full lg:w-5/12">
-            <div className="bg-light py-10 px-7 lg:px-10 !pr-28 md:!pr-32 lg:!pr-40 rounded-lg relative">
+            <div className="bg-light py-10 px-7 lg:px-10 !pr-28 md:!pr-32 lg:!pr-40 rounded-lg relative" data-aos="fade-in">
               {statsContent.getStarted.img && (
                 <img
                   src={statsContent.getStarted.img}
@@ -75,7 +92,9 @@ const Stats = () => {
                   className="flex space-x-2 outline-none items-center font-semibold text-primary group"
                 >
                   <span>{statsContent.getStarted.cta.cta_label}</span>
-                  <span className="w-6 h-6 rounded-full bg-primary text-white inline-flex items-center justify-center duration-300 transition-all ease-in-out group-hover:bg-secondary"><BiChevronRight className="text-lg" /></span>
+                  <span className="w-6 h-6 rounded-full bg-primary text-white inline-flex items-center justify-center duration-300 transition-all ease-in-out group-hover:bg-secondary">
+                    <BiChevronRight className="text-lg" />
+                  </span>
                 </Link>
               )}
             </div>
